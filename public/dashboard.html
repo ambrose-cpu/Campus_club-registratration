@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campus Club Hub - Dashboard</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-page">
+    <h1>Welcome to the Campus Club Hub!</h1>
+    <h2>Available Clubs</h2>
+
+    <div class="clubs-container">
+        <div class="club">
+    <img src="football.jpg" alt="Football Club">
+    <h3>Football Club</h3>
+    <button onclick="goToProfile('Football')">Join</button>
+</div>
+
+    <div class="club">
+        <img src="basketball.jpg" alt="Basketball Club">
+        <h3>Basketball Club</h3>
+        <button onclick="goToProfile('Basketball')">Join</button>
+    
+    </div>
+
+    <div class="club">
+        <img src="volleyball.jpg" alt="Volleyball Club">
+        <h3>Volleyball Club</h3>
+        <button onclick="goToProfile('Volleyball')">Join</button>
+    </div>
+    
+    <div class="club">
+        <img src="swimming.jpg" alt="Swimming Club">
+        <h3>Swimming Club</h3>
+        <button onclick="goToProfile('Swimming')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="hockey.jpg" alt="Hockey Club">
+        <h3>Hockey Club</h3>
+        <button onclick="goToProfile('Hockey')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="coding.jpg" alt="Coding Club" class="club-image">
+        <h3>Coding Club</h3>
+        <button onclick="goToProfile('Coding')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="robotics.jpg" alt="Robotics Club">
+        <h3>Robotics Club</h3>
+        <button onclick="goToProfile('Robotics')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="drama.jpg" alt="Drama Club">
+        <h3>Drama Club</h3>
+        <button onclick="goToProfile('Drama')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="music.jpg" alt="Music Club">
+        <h3>Music Club</h3>
+        <button onclick="goToProfile('Music')">Join</button>
+        
+    </div>
+
+    <div class="club">
+        <img src="art.jpg" alt="Art Club">
+        <h3>Art Club</h3>
+        <button onclick="goToProfile('Art')">Join</button>
+        
+    </div>
+    </div>
+    <!-- Hidden Profile Form -->
+<div id="profile-form" style="display:none;">
+    <h3>Complete Your Profile</h3>
+    <input type="text" id="full_name" placeholder="Full Name">
+    <input type="text" id="reg_number" placeholder="Registration Number">
+    <input type="number" id="year" placeholder="Year">
+    <button onclick="submitProfile()">Submit</button>
+    </div>
+</div>
+<script>
+// Join Club function
+function joinClub(clubName, button) {
+    fetch('/join-club', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ club_name: clubName })
+    })
+    .then(res => {
+        if (!res.ok) throw res;
+        return res.text();
+    })
+    .then(msg => {
+        alert(msg);
+        button.innerText = "Joined";
+        button.disabled = true;
+    })
+    .catch(async err => {
+        const text = await err.text();
+        if (text.includes("Please complete your profile")) {
+            document.getElementById("profile-form").style.display = "block";
+        } else {
+            alert(text);
+        }
+    });
+}
+
+// Submit Profile function
+function submitProfile() {
+    const data = {
+        full_name: document.getElementById("full_name").value,
+        reg_number: document.getElementById("reg_number").value,
+        year: document.getElementById("year").value
+    };
+
+    fetch('/update-profile', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        document.getElementById("profile-form").style.display = "none";
+    });
+}
+</script>
+<script>
+function goToProfile(clubName) {
+    window.location.href = "complete-profile.html?club=" + clubName;
+}
+</script>
+</body>
+</html>

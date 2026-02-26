@@ -1,0 +1,332 @@
+/* Base styles */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-top: 40px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+h2 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.section-title {
+  color: #2980b9;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 15px 0 20px 0;
+}
+
+/* site title on login page */
+.site-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #2980b9;
+  margin-bottom: 5px;
+}
+
+.slogan {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 0 0 20px 0;
+  font-style: italic;
+  text-align: center;
+  max-width: 80%;
+}
+
+p {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+a {
+  color: #2980b9;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Form container styles */
+form {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 35px 28px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 85%;
+  max-width: 320px;
+  border: 1px solid rgba(41, 128, 185, 0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: #2980b9;
+  box-shadow: 0 0 8px rgba(41, 128, 185, 0.2);
+}
+
+button {
+  width: 100%;
+  padding: 12px 0;
+  background: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(41, 128, 185, 0.3);
+}
+
+button:hover {
+  background: #1c5980;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(41, 128, 185, 0.4);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 30px 0;
+  width: 80%;
+  max-width: 400px;
+}
+
+/* Utility classes */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.site-title {
+  animation: fadeInUp 1s ease-out;
+}
+
+form {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+button {
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+    color: #eee;
+  }
+  h1, h2, .site-title {
+    color: #ecf0f1;
+  }
+  .slogan {
+    color: #ccc;
+  }
+  a {
+    color: #81cfe0;
+  }
+  form {
+    background: rgba(30, 30, 30, 0.85);
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    background: #444;
+    border: 1px solid #666;
+    color: #fff;
+  }
+  button {
+    background: #81cfe0;
+    color: #2c3e50;
+  }
+  button:hover {
+    background: #5bb9d1;
+  }
+}
+.club img {
+        width: 200px;       /* change this to control width */
+        height: 150px;      /* change this to control height */
+        object-fit: cover;  /* keeps image nicely fitted */
+    }
+    
+.club {
+        display: inline-block;
+        margin: 20px;
+        text-align: center;
+    }
+    .club h3 {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: #2c3e50;
+    }
+    .club form {
+        margin-top: 10px;
+    }
+
+   .clubs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.club {
+    width: 220px;
+display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: white;
+}
+
+.club img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.club button {
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.club button:hover {
+    background: #0056b3;
+}
+.club {
+    width: 220px;
+    display: flex;
+    flex-direction: column; /* makes img, h3, form stacked */
+    justify-content: space-between; /* spreads content evenly */
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+/* Only affect h1 and h2 inside dashboard */
+.dashboard-page h1 {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.dashboard-page h2 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #555;
+    margin: 20px 0 10px 0;
+    text-transform: uppercase;
+}
+
+.dashboard-page h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background-color: #007bff;
+    margin: 8px auto;
+    border-radius: 2px;
+}
+    .clubs-container {
+    display: flex;
+    flex-wrap: wrap;      /* allows next row */
+    gap: 20px;            /* space between clubs */
+    justify-content: center;
+}
+
+.club {
+    width: 250px;
+}
+.dropdown-box{
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-bottom: 2px solid #ccc;
+
+    /* Makes dropdown look like textbox */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Add dropdown arrow inside box */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+}
+button{
+    margin-top: 25px;
+}

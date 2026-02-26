@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Complete Your Profile</h2>
+
+        <form action="/complete-profile" method="POST">
+            <input type="hidden" name="club_name" id="clubNameInput">
+
+            <label>Registration Number</label>
+            <input type="text" name="reg_number" required>
+
+            <label>Year of Study</label>
+         
+<select class="dropdown-box" name="year" required>
+    <option value=""> select Year of Study</option>
+    <option value="1">Year 1</option>
+    <option value="2">Year 2</option>
+    <option value="3">Year 3</option>
+    <option value="4">Year 4</option>
+</select>
+          
+            <button type="submit">Submit & Join Club</button>
+        </form>
+    </div>
+
+    <script>
+        // Get club name from URL
+        const params = new URLSearchParams(window.location.search);
+        const club = params.get("club");
+
+        document.getElementById("clubNameInput").value = club;
+    </script>
+    
+
+</body>
+</html>
