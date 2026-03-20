@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">🏫 Admin Panel</h2>
+        <ul>
+            <li><a href="#"><span>📊</span> Dashboard</a></li>
+            <li><a href="#"><span>👥</span> Participants</a></li>
+            <li><a href="#"><span>🏆</span> Clubs</a></li>
+            <li><a href="#"><span>📅</span> Events</a></li>
+            <li><a href="login.html">🚪 Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Top Bar -->
+        <div class="topbar">
+            <h2>Admin Dashboard</h2>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>👨‍🎓 Total Students</h3>
+                <p id="totalUsers">0</p>
+            </div>
+
+            <div class="card">
+                <h3>📝 Registrations</h3>
+                <p id="totalRegs">0</p>
+            </div>
+
+            <div class="card">
+                <h3>🏅 Clubs Joined</h3>
+                <p id="totalClubs">0</p>
+            </div>
+
+            <div class="card">
+                <h3>📅 Upcoming Events</h3>
+                <p>0</p>
+            </div>
+        </div>
+
+        <!-- Table Section -->
+        <h2>Participants Records</h2>
+
+        <div class="table-box">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Reg Number</th>
+                        <th>Year</th>
+                        <th>Club</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // Fetch participants and update table + cards
+    fetch('/admin/dashboard-data')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = "";
+
+            // Update cards
+            document.getElementById('totalUsers').textContent = data.length;
+
+            // Count unique users for registrations
+            const uniqueUsers = [...new Set(data.map(d => d.id))];
+            document.getElementById('totalRegs').textContent = uniqueUsers.length;
+
+            // Count unique clubs joined
+            const uniqueClubs = [...new Set(data.map(d => d.club_name))];
+            document.getElementById('totalClubs').textContent = uniqueClubs.length;
+
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="5" style="text-align:center;">No participants yet</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.full_name || '-'}</td>
+                    <td>${row.reg_number || '-'}</td>
+                    <td>${row.year || '-'}</td>
+                    <td>${row.club_name || '-'}</td>
+                    <td><button onclick="deleteParticipant(${row.id}, '${row.club_name}')">Delete</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(err => console.log("Error fetching dashboard data:", err));
+
+    // Delete participant from a club
+    function deleteParticipant(userId, clubName) {
+        fetch(`/admin/delete-participant?user_id=${userId}&club_name=${clubName}`, { method: 'DELETE' })
+            .then(res => res.text())
+            .then(msg => {
+                alert(msg);
+                location.reload(); // refresh table
+            });
+    }
+</script>
+
+</body>
+</html>

@@ -10,7 +10,7 @@
         <h2>Complete Your Profile</h2>
 
         <form action="/complete-profile" method="POST">
-            <input type="hidden" name="club_name" id="clubNameInput">
+            <input type="hidden" name="club_name" id="clubNameInput" value="football">
 
             <label>Registration Number</label>
             <input type="text" name="reg_number" required>
@@ -31,12 +31,16 @@
 
     <script>
         // Get club name from URL
-        const params = new URLSearchParams(window.location.search);
-        const club = params.get("club");
-
-        document.getElementById("clubNameInput").value = club;
+        const urlParams = new URLSearchParams(window.location.search);
+        const clubName = urlParams.get('club');
+        console.log("Club from URL:", clubName);
+        document.getElementById("clubNameInput").value = clubName;
     </script>
-    
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const club = params.get("club");
 
+    document.getElementById("clubNameInput").value = club;
+</script>
 </body>
 </html>

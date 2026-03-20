@@ -1,0 +1,252 @@
+body{
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    background:#f4f6f9;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login-container{
+    background:white;
+    padding:30px;
+    width:300px;
+    border-radius:8px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:8px 0 15px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#007BFF;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+body{
+    margin:0;
+    font-family: Arial;
+    background:#f4f6f9;
+    display:flex;
+}
+/* ================= GLOBAL ================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body{
+    background:#f4f6fb;
+}
+
+/* ================= DASHBOARD LAYOUT ================= */
+
+.dashboard{
+    display:flex;
+}
+
+/* ================= SIDEBAR ================= */
+
+/* Sidebar Container */
+.sidebar{
+    width:250px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    position:fixed;
+    left:0;
+    top:0;
+    padding:25px 15px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Title */
+.sidebar .logo{
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:40px;
+    letter-spacing:1px;
+}
+
+
+/* Remove list style */
+.sidebar ul{
+    list-style:none;
+    padding:0;
+}
+
+/* Menu Items */
+.sidebar ul li{
+    margin-bottom:12px;
+}
+
+/* Links */
+.sidebar ul li a{
+    text-decoration:none;
+    color:white;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+/* Hover Effect */
+.sidebar ul li a:hover{
+    background:#1f2937;
+    padding-left:22px;
+}
+
+/* Icons inside span */
+.sidebar ul li span{
+    width:25px;
+    display:inline-block;
+    text-align:center;
+}
+
+/* Logout special style */
+.sidebar ul li:last-child a{
+    background:#ef4444;
+}
+
+.sidebar ul li:last-child a:hover{
+    background:#dc2626;
+}
+
+
+/* ================= MAIN CONTENT ================= */
+
+.main{
+    margin-left:140px;
+    padding:35px;
+    width:100%;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.05);
+    margin-bottom:30px;
+}
+
+/* ================= CARDS ================= */
+
+.cards{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+    
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    width:220px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#6b7280;
+}
+
+.card p{
+    font-size:32px;
+    font-weight:bold;
+}
+
+/* ================= TABLE ================= */
+
+.table-box{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#111827;
+    color:white;
+}
+
+th, td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+/* ================= BUTTONS ================= */
+
+button{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:.8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.sidebar{
+    display:none;
+}
+
+.main{
+    margin-left:0;
+}
+
+.cards{
+    flex-direction:column;
+}
+}
