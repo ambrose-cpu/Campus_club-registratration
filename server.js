@@ -21,16 +21,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // ================= MYSQL CONNECTION =================
+const mysql = require('mysql2');
+
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'ambrose',
-    password: 'amby@123',
-    database: 'campus_club_hub'
+  host: process.env.DB_HOST,       // from Render Environment Group
+  user: process.env.DB_USER,       // from Render Environment Group
+  password: process.env.DB_PASSWORD, // from Render Environment Group
+  database: process.env.DB_NAME,   // from Render Environment Group
+  port: process.env.DB_PORT,       // from Render Environment Group
+  ssl: { rejectUnauthorized: false } // needed for Aiven
 });
 
 db.connect(err => {
-    if (err) console.log("Database connection failed:", err);
-    else console.log("Connected to MySQL database");
+  if (err) console.error("Database connection failed:", err);
+  else console.log("Connected to Aiven MySQL!");
 });
 
 // ================= HOME PAGE =================
