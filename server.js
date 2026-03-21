@@ -23,21 +23,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // ================= MYSQL CONNECTION =================
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  ssl: { rejectUnauthorized: false } // ✅ Required for Aiven
+const mysql = require('mysql2');
+
+const connection = mysql.createConnection({
+  // This tells the app: "Use the Render variable, OR use localhost if it's not found"
+  host: process.env.DB_HOST || 'mysql-2fe70008-opondoambrose78-aba4.i.aivencloud.com',
+  user: process.env.DB_USER || 'avnadmin',
+  password: process.env.DB_PASSWORD || 'AVNS_5LNp5hYWz2NqMpVr3Xo',
+  database: process.env.DB_NAME || 'defaultdb',
+  port: process.env.DB_PORT || 25773,
+  // Aiven REQUIRES SSL to connect from Render
+  ssl: process.env.DB_HOST ? { rejectUnauthorized: false } : false
 });
 
-db.connect(err => {
+connection.connect((err) => {
   if (err) {
-    console.error("❌ Database connection failed:", err);
-  } else {
-    console.log("✅ Connected to Aiven MySQL!");
+    console.error('Database connection failed:', err.stack);
+    return;
   }
+  console.log('Connected to database successfully!');
 });
 
 // ================= HOME PAGE =================
