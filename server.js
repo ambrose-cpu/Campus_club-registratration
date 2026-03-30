@@ -2,11 +2,11 @@ const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
-// ✅ Use Render port
-const port = process.env.PORT || 5000;
 
 // ================= ADMIN CREDENTIALS =================
 const ADMIN_USERNAME = "admin";
@@ -23,26 +23,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
 // ================= MYSQL CONNECTION =================
-const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  // This tells the app: "Use the Render variable, OR use localhost if it's not found"
-  host: process.env.DB_HOST || 'mysql-2fe70008-opondoambrose78-aba4.i.aivencloud.com',
-  user: process.env.DB_USER || 'avnadmin',
-  password: process.env.DB_PASSWORD || 'AVNS_5LNp5hYWz2NqMpVr3Xo',
-  database: process.env.DB_NAME || 'defaultdb',
-  port: process.env.DB_PORT || 25773,
-  // Aiven REQUIRES SSL to connect from Render
-  ssl: process.env.DB_HOST ? { rejectUnauthorized: false } : false
+const connection = mysql.createConnection(process.env.DATABASE_URL || {
+  host: 'localhost',
+  user: 'ambrose',
+  password: 'mby@123', 
+  database: 'campus_club_hub'
 });
-
 connection.connect((err) => {
   if (err) {
-    console.error('Database connection failed:', err.stack);
+    console.error('Error connecting to MySQL:', err);
     return;
   }
-  console.log('Connected to database successfully!');
+  console.log('Connected to MySQL database');
 });
+
 
 // ================= HOME PAGE =================
 app.get('/', (req, res) => {
@@ -77,7 +72,7 @@ app.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const sql = 'INSERT INTO users (full_name, email, password) VALUES (?, ?, ?)';
-    db.query(sql, [full_name, email, hashedPassword], (err) => {
+    connection.query(sql, [full_name, email, hashedPassword], (err) => {
       if (err) {
         console.log(err);
         return res.send("Error registering user");
@@ -97,7 +92,7 @@ app.post('/login', (req, res) => {
 
   const sql = 'SELECT * FROM users WHERE email=?';
 
-  db.query(sql, [email], async (err, results) => {
+  connection.query(sql, [email], async (err, results) => {
     if (err) return res.send("Database error");
     if (results.length === 0) return res.send("User not found");
 
@@ -121,7 +116,7 @@ app.post('/update-profile', (req, res) => {
   const { full_name, reg_number, year } = req.body;
 
   const sql = "UPDATE users SET full_name=?, reg_number=?, year=? WHERE id=?";
-  db.query(sql, [full_name, reg_number, year, userId], (err) => {
+  connection.query(sql, [full_name, reg_number, year, userId], (err) => {
     if (err) return res.send("Error updating profile");
     res.send("Profile updated successfully");
   });
@@ -133,11 +128,11 @@ app.post('/complete-profile', (req, res) => {
   const { reg_number, year, club_name } = req.body;
 
   const updateProfile = "UPDATE users SET reg_number=?, year=? WHERE id=?";
-  db.query(updateProfile, [reg_number, year, userId], (err) => {
+  connection.query(updateProfile, [reg_number, year, userId], (err) => {
     if (err) return res.send("Error updating profile");
 
     const checkDuplicate = "SELECT * FROM club_registrations WHERE user_id=? AND club_name=?";
-    db.query(checkDuplicate, [userId, club_name], (err2, duplicate) => {
+    connection.query(checkDuplicate, [userId, club_name], (err2, duplicate) => {
       if (err2) return res.send("Database error (duplicate check)");
 
       if (duplicate.length > 0) {
@@ -145,7 +140,7 @@ app.post('/complete-profile', (req, res) => {
       }
 
       const insertSql = "INSERT INTO club_registrations (user_id, club_name) VALUES (?, ?)";
-      db.query(insertSql, [userId, club_name], (err3) => {
+      connection.query(insertSql, [userId, club_name], (err3) => {
         if (err3) return res.send("Error joining club");
 
         res.send(`Profile completed and you joined ${club_name}`);
@@ -163,7 +158,7 @@ app.get('/admin/dashboard-data', (req, res) => {
     ORDER BY u.full_name
   `;
 
-  db.query(sql, (err, results) => {
+  connection.query(sql, (err, results) => {
     if (err) {
       console.log(err);
       return res.status(500).json({ error: err.sqlMessage });
@@ -177,7 +172,7 @@ app.delete('/admin/delete-participant', (req, res) => {
   const { user_id, club_name } = req.query;
 
   const sql = "DELETE FROM club_registrations WHERE user_id=? AND club_name=?";
-  db.query(sql, [user_id, club_name], (err) => {
+  connection.query(sql, [user_id, club_name], (err) => {
     if (err) return res.send("Error deleting participant");
     res.send("Participant removed successfully");
   });
